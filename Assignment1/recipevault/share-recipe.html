@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RecipeVault - Share a Recipe</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header class="header">
+    <div class="header-box">
+      <h1 class="site-title">RecipeVault</h1>
+
+      <nav class="nav">
+        <a href="index.html">Recipes</a>
+        <a href="share-recipe.html">Share Recipe</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="container">
+    <main class="main box">
+      <h2>Submit Your Recipe</h2>
+      <p class="muted">Please fill the form and submit.</p>
+
+      <form class="form" action="#" method="post" enctype="multipart/form-data">
+
+        <fieldset>
+          <legend>Recipe Info</legend>
+
+          <div class="row">
+            <label for="rname">Recipe name</label>
+            <input id="rname" name="recipeName" type="text"
+                   placeholder="Example: Caesar Salad"
+                   required aria-required="true">
+          </div>
+
+          <div class="row">
+            <label for="rdesc">Short description</label>
+            <input id="rdesc" name="shortDescription" type="text"
+                   placeholder="Write a short line..."
+                   required aria-required="true">
+          </div>
+
+          <div class="row">
+            <label for="cat">Category</label>
+            <select id="cat" name="category">
+              <optgroup label="Meals">
+                <option value="breakfast">Breakfast</option>
+                <option value="lunch">Lunch</option>
+                <option value="dinner">Dinner</option>
+              </optgroup>
+              <optgroup label="Other">
+                <option value="dessert">Dessert</option>
+                <option value="snack">Snack</option>
+                <option value="drink">Drink</option>
+              </optgroup>
+            </select>
+          </div>
+
+          <div class="row">
+            <label for="cuisine">Cuisine</label>
+            <input id="cuisine" name="cuisine" type="text" list="cuisineList"
+                   placeholder="Italian, Indian...">
+            <datalist id="cuisineList">
+              <option value="Italian"></option>
+              <option value="Indian"></option>
+              <option value="Mexican"></option>
+              <option value="Qatari"></option>
+              <option value="Chinese"></option>
+            </datalist>
+          </div>
+
+          <div class="row numbers">
+            <div>
+              <label for="prep">Prep time (min)</label>
+              <input id="prep" name="prepTime" type="number" min="0" max="300" step="5" placeholder="10">
+            </div>
+
+            <div>
+              <label for="cook">Cook time (min)</label>
+              <input id="cook" name="cookTime" type="number" min="0" max="300" step="5" placeholder="20">
+            </div>
+
+            <div>
+              <label for="serv">Servings</label>
+              <input id="serv" name="servings" type="number" min="1" max="20" step="1" placeholder="4">
+            </div>
+          </div>
+
+          <div class="row">
+            <label for="date">Date</label>
+            <input id="date" name="date" type="date">
+          </div>
+
+          <div class="row">
+            <label for="photo">Recipe photo</label>
+            <input id="photo" name="photo" type="file" accept="image/*">
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Details</legend>
+
+          <div class="row">
+            <p class="label">Difficulty</p>
+            <div class="options">
+              <label><input type="radio" name="difficulty" value="easy" checked> Easy</label>
+              <label><input type="radio" name="difficulty" value="medium"> Medium</label>
+              <label><input type="radio" name="difficulty" value="hard"> Hard</label>
+            </div>
+          </div>
+
+          <div class="row">
+            <p class="label">Dietary tags</p>
+            <div class="options">
+              <label><input type="checkbox" name="tags" value="vegetarian"> Vegetarian</label>
+              <label><input type="checkbox" name="tags" value="vegan"> Vegan</label>
+              <label><input type="checkbox" name="tags" value="glutenfree"> Gluten-free</label>
+              <label><input type="checkbox" name="tags" value="highprotein"> High protein</label>
+            </div>
+          </div>
+
+          <div class="row">
+            <label for="ing">Ingredients</label>
+            <textarea id="ing" name="ingredients" rows="6"
+                      required aria-required="true"
+                      aria-describedby="ingHelp"
+                      placeholder="Write each ingredient on a new line..."></textarea>
+            <small id="ingHelp" class="help">Example: 2 eggs, 1 cup milk, ...</small>
+          </div>
+        </fieldset>
+
+        <div class="actions">
+          <button class="btn primary" type="submit">Submit</button>
+          <button class="btn secondary" type="reset">Reset</button>
+        </div>
+
+      </form>
+    </main>
+  </div>
+
+  <footer class="footer">
+    <p>&copy; 2026 RecipeVault</p>
+    <p><del>Burn your food</del> <strong>Cook with love!</strong></p>
+
+    <nav class="footer-nav">
+      <a href="index.html">Recipes</a>
+      <a href="share-recipe.html">Share Recipe</a>
+    </nav>
+  </footer>
+
+</body>
+</html>
