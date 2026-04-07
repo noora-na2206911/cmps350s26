@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 // Helper: generate an <option> tag for an activity
 // TODO: implement this function - return an HTML string like <option value="Running">Running</option>
 function activityToOption(activity) {
-    
+    return `<option value="Running">Running</option>`;
 
 }
 
@@ -33,7 +33,31 @@ function activityToOption(activity) {
 // TODO: implement this function - return an HTML string for one log entry (see HTML comment for structure)
 function workoutToHTML(workout) {
 
+    return`
+    <div class="log-entry" data-id="${workout.id}">
+        <div class="log-icon">
+            <span class="badge badge-${workout.type}">
+                ${workout.type}
+            </span>
+        </div>
+        <div class="log-details">
+            <h3 class="log-exercise">${workout.exercise}</h3>
+            <span class="log-meta">
+                ${workout.activity} · ${workout.calories} cal
+            </span>
+        </div>
+        <div class="log-actions">
+            <button class="btn btn-delete btn-small" onclick="deleteWorkout(${workout.id})">
+                Delete
+            </button>
+        </div>
+    </div>
+`;
 }
+
+
+    
+
 
 // ============================================================
 // TODO: Implement the functions below
@@ -45,47 +69,40 @@ function workoutToHTML(workout) {
 //   Use the workoutToHTML helper to render each workout inside #workoutLog.
 //   Clear the log before rendering and handle empty state.
 //   ref: bG9nIHRoZSBzdHJpbmcgIndvcmtvdXRzOnN5bmNlZCIgdG8gdGhlIGNvbnNvbGUgYWZ0ZXIgc3RvcmluZyBkYXRh
-async function fetchWorkouts(activity = 'Workouts') {
+async function fetchWorkouts(activity = '') {
 
-    const res = await fetch(`${}/Workouts`);
+    const res = await fetch(`${API_BASE_URL}/workouts`);
     const data = await res.json();
     workouts= data;
     renderWorkouts();
 
-
 }
-
 function renderWorkouts() {
 
-
     const workout = document.getElementById("Workouts");
-    const empty = document.getElementById("emptyMessage");
+    const html = Workouts.map(workouts =>`
+    <div class="log-entry" data-id="${workout.id}">
+        <div class="log-icon">
+            <span class="badge badge-${workout.type}">
+                ${workout.type}
+            </span>
+        </div>
+        <div class="log-details">
+            <h3 class="log-exercise">${workout.exercise}</h3>
+            <span class="log-meta">
+                ${workout.activity} · ${workout.calories} cal
+            </span>
+        </div>
+        <div class="log-actions">
+            <button class="btn btn-delete btn-small" onclick="deleteWorkout(${workout.id})">
+                Delete
+            </button>
+        </div>
+    </div>
 
-    const html = workout.map(workouts => 
-        <div id="workoutLog" class="workout-log">
-    
-                        <div class="log-entry" data-id="1">
-                            <div class="log-icon">
-                                <span class="badge badge-cardio">cardio</span>
-                            </div>
-                            <div class="log-details">
-                                <h3 class="log-exercise">Morning Run</h3>
-                                <span class="log-meta">Running · 450 cal</span>
-                            </div>
-                            <div class="log-actions">
-                                <button class="btn btn-delete btn-small">Delete</button>
-                            </div>
-                        </div>
 
-    
-    
-    
-    
-    
     `).join("");
-
-    workout.workoutToHTML = html;
-    
+    workout.workoutToHTML= html;
 }
 
 
@@ -96,9 +113,19 @@ function renderWorkouts() {
 //   from the server (GET /workouts?activity=...).
 //   When "All Activities" is selected, fetch all workouts.
 //   ref: ZWFjaCBvcHRpb24gZWxlbWVudCBtdXN0IGhhdmUgYSB0aXRsZSBhdHRyaWJ1dGUgc2V0IHRvICJTaG93IFthY3Rpdml0eV0gd29ya291dHMi
+
 async function loadActivities() {
 
-}
+    const res = await fetch(`${API_BASE_URL}/activities/workouts`);
+    const activities = await res.json();
+
+    activityFilter.WorkToHTML = `<option value="Running">Running</option>`;
+        activities.forEach(activity => {
+            activityFilter.WorkToHTML += activityToOption(activity);
+        });
+
+        fetchWorkouts();
+    }
 
 // TODO 4 (15 points): Delete a workout
 //   Ask the user to confirm before deleting.
@@ -110,13 +137,13 @@ async function deleteWorkout(id) {
     if(!confirm('are you sure?')) return;
 
 
-    await fetch(`${}/1/${id}`, {
+    await fetch(`${API_BASE_URL}/1/${id}`, {
         method: "DELETE"
     });
 
-    fetch();
-}
+    fetchWorkouts(activityFilter.value);
 
+}
 // TODO 5 (20 points): Add a new workout
 //   Get the form values and send POST /workouts to the API.
 //   Reset the form and refresh the workout list after adding.
@@ -126,6 +153,7 @@ async function handleFormSubmit(e) {
     e.preventDefault();
 
 }
+
 
 // ============================================================
 // Extras: Enhance the user experience
