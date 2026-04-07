@@ -119,11 +119,10 @@ async function loadActivities() {
     const res = await fetch(`${API_BASE_URL}/activities/workouts`);
     const activities = await res.json();
 
-    activityFilter.WorkToHTML = `<option value="Running">Running</option>`;
+    filter.WorkToHTML = `<option value="Running">Running</option>`;
         activities.forEach(activity => {
-            activityFilter.WorkToHTML += activityToOption(activity);
+            filter.WorkToHTML += activityToOption(activity);
         });
-
         fetchWorkouts();
     }
 
@@ -137,7 +136,7 @@ async function deleteWorkout(id) {
     if(!confirm('are you sure?')) return;
     await fetch(`${API_BASE_URL}/1/${id}`, {
         method: "DELETE"});
-    fetchWorkouts(activityFilter.value);
+    fetchWorkouts(filter.value); // this will refresh aftr deletion
 
 }
 // TODO 5 (20 points): Add a new workout
@@ -167,7 +166,7 @@ if (!e) return;
     });
 
     workoutForm.reset(); 
-    fetchWorkouts(activityFilter.value);
+    fetchWorkouts(filter.value); //this reset then refresh after add
 
 
 }
