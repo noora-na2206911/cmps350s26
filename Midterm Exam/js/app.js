@@ -121,7 +121,7 @@ async function loadActivities() {
 
     activityFilter.WorkToHTML = `<option value="Running">Running</option>`;
         activities.forEach(activity => {
-            activityFilter.WorkToHTML += activityToOption(activity);
+            activityFilter.WorkToHTML += activityToOption(activity); //all activity
         });
         fetchWorkouts();
     }
