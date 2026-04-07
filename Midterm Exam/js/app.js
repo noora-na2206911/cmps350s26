@@ -71,7 +71,7 @@ function workoutToHTML(workout) {
 //   ref: bG9nIHRoZSBzdHJpbmcgIndvcmtvdXRzOnN5bmNlZCIgdG8gdGhlIGNvbnNvbGUgYWZ0ZXIgc3RvcmluZyBkYXRh
 async function fetchWorkouts(activity = '') {
 
-    const res = await fetch(`${API_BASE_URL}/workouts`);
+    const res = await fetch(` 'https://exam-api-nine.vercel.app'/workouts`);
     const data = await res.json();
     workouts= data;
     renderWorkouts();
@@ -116,12 +116,12 @@ function renderWorkouts() {
 
 async function loadActivities() {
 
-    const res = await fetch(`${API_BASE_URL}/activities/workouts`);
+    const res = await fetch(` 'https://exam-api-nine.vercel.app'/activities/workouts`);
     const activities = await res.json();
 
-    filter.WorkToHTML = `<option value="Running">Running</option>`;
+    activityFilter.WorkToHTML = `<option value="Running">Running</option>`;
         activities.forEach(activity => {
-            filter.WorkToHTML += activityToOption(activity);
+            activityFilter.WorkToHTML += activityToOption(activity);
         });
         fetchWorkouts();
     }
@@ -134,9 +134,9 @@ async function loadActivities() {
 async function deleteWorkout(id) {
 
     if(!confirm('are you sure?')) return;
-    await fetch(`${API_BASE_URL}/1/${id}`, {
+    await fetch(` 'https://exam-api-nine.vercel.app'/1/${id}`, {
         method: "DELETE"});
-    fetchWorkouts(filter.value); // this will refresh aftr deletion
+    fetchWorkouts(activityFilter.value); // this will refresh aftr deletion
 
 }
 // TODO 5 (20 points): Add a new workout
@@ -147,8 +147,8 @@ async function handleFormSubmit(e) {
 
 
     e.preventDefault();
-
-if (!e) return;
+    //submitBtn or e
+if (!submitBtn) return;
 
     const updates = {
         exercises: document.getElementById('exercise').value,
@@ -157,7 +157,7 @@ if (!e) return;
         activities: document.getElementById('category').value
     };
 
-    await fetch(`${API_BASE_URL}/workouts`, {
+    await fetch(`https://exam-api-nine.vercel.app/workouts`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -166,7 +166,7 @@ if (!e) return;
     });
 
     workoutForm.reset(); 
-    fetchWorkouts(filter.value); //this reset then refresh after add
+    fetchWorkouts(activityFilter.value); //this reset then refresh after add
 
 
 }
