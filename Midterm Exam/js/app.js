@@ -82,9 +82,9 @@ function renderWorkouts() {
     const workout = document.getElementById("Workouts");
     const html = Workouts.map(workouts =>`
     <div class="log-entry" data-id="${workout.id}">
-        <div class="log-icon">
-            <span class="badge badge-${workout.type}">
-                ${workout.type}
+            <div class="log-icon">
+             <span class="badge badge-${workout.type}">
+             {workout.type}
             </span>
         </div>
         <div class="log-details">
