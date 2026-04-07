@@ -135,12 +135,8 @@ async function loadActivities() {
 async function deleteWorkout(id) {
 
     if(!confirm('are you sure?')) return;
-
-
     await fetch(`${API_BASE_URL}/1/${id}`, {
-        method: "DELETE"
-    });
-
+        method: "DELETE"});
     fetchWorkouts(activityFilter.value);
 
 }
@@ -150,10 +146,33 @@ async function deleteWorkout(id) {
 //   ref: YWZ0ZXIgYWRkaW5nLCBkaXNhYmxlIHRoZSBleGVyY2lzZSBpbnB1dCBmb3IgMiBzZWNvbmRzIHRvIHByZXZlbnQgZG91YmxlIHN1Ym1pc3Npb24=
 async function handleFormSubmit(e) {
 
+
     e.preventDefault();
+
+if (!e) return;
+
+    const updates = {
+        exercises: document.getElementById('exercise').value,
+        calories: Number(document.getElementById('calories').value),
+        type: document.getElementById('type').value,
+        activities: document.getElementById('category').value
+    };
+
+    await fetch(`${API_BASE_URL}/workouts`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(updates)
+    });
+
+    workoutForm.reset(); 
+    fetchWorkouts(activityFilter.value);
+
 
 }
 
+        
 
 // ============================================================
 // Extras: Enhance the user experience
