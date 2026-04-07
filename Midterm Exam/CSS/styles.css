@@ -161,8 +161,25 @@ body {
 /* (position absolute, left -26px, 12px circle, background var(--primary), 3px border) */
 .workout-log {
     /* Add code here for TODO 1 */
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-left: 30px;
+  
 }
 
+.workout-log::before {
+    content: "";
+    position: absolute;
+    left: 8px;
+    top: 0;
+    width: 3px;
+    height: 100%;
+    background-color: var(--border-dark);
+  }
+  
+  
 .empty-message {
     text-align: center;
     color: var(--text-muted);
@@ -188,6 +205,17 @@ body {
 }
 
 /* .log-entry::before - students add this as part of TODO 1 */
+.log-entry::before {
+    content: "";
+    position: absolute;
+    left: -26px;
+    top: 0; 
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: var(--primary);
+    border: 3px solid var(--border);
+  }
 
 .log-entry:hover {
     border-color: var(--primary);
