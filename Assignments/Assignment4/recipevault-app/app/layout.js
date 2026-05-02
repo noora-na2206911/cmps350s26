@@ -1,4 +1,5 @@
 import "./globals.css";
+import NavBar from "./components/NavBar";
 // TODO: Import your NavBar component
 
 export const metadata = {
@@ -10,9 +11,10 @@ export default function RootLayout({ children }) {
     return (
         <html lang="en">
             <body>
-                {/* TODO: Render the NavBar above {children} so it appears on every page */}
+                <NavBar />
                 {children}
             </body>
         </html>
     );
 }
+
