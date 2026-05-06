@@ -1,6 +1,7 @@
 "use client";
 
-export function navBarHTML() {
+import Link from "next/link";
+export default function navBarHTML() {
     return (
         <nav class="navbar">
             <Link href="/client/index.html" class="brand">VolunteerLog</Link>
