@@ -11,7 +11,7 @@ export default async function ActivityDetailPage({ params }) {
     const [searchTerm, setSearchTerm] = useState("");
     const [deleteId, setDeleteId] = useState(null);
 
-    async function loadBudgets() {
+    async function loadActivities() {
         const url = searchTerm
             ? `/api/activities?q=${searchTerm}`
             : "/api/activities";
