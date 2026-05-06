@@ -1,4 +1,5 @@
 import "./globals.css";
+import NavBar from "@/app/components/NavBar.jsx";
 
 export const metadata = {
     title: "VolunteerLog",
@@ -9,6 +10,7 @@ export default function RootLayout({ children }) {
     return (
         <html lang="en">
             <body>
+                <NavBar />
                 {children}
             </body>
         </html>
