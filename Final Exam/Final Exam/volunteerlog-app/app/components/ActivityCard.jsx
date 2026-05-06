@@ -5,7 +5,18 @@ export default function ActivityCard({ activity, onDelete }) {
     //  - Replace every hardcoded value with the matching activity prop
     //  - Wire the Delete button's onClick to call onDelete(activity.id)
     //  - Wire the View Details link to navigate to the detail page (/activities/<id>)
+    const percentage = Math.round((activity.spent / activity.activity) * 100);
+    const color = percentage > 90 ? "danger" : percentage > 70 ? "warning" : "success";
 
+export default function SummaryCard({ image, title, amount, category }) {
+    return (
+        <div className={`card card--${category}`}>
+            <h3>{title}</h3>
+            <p className="amount">{amount.toLocaleString()} QAR</p>
+        </div>
+    );
+}
+}
     return (
         <article className="activity-card">
             <div className="cover">
@@ -26,10 +37,16 @@ export default function ActivityCard({ activity, onDelete }) {
             </div>
         </article>
     );
-}
 
+    const dateLabel = new Date(xxxxx).toLocaleDateString("en-US", {
+        month: "short", day: "numeric", year: "numeric"
+        });
+    }
+
+}
 // Use this code
 
 // const dateLabel = new Date(xxxxx).toLocaleDateString("en-US", {
-//         month: "short", day: "numeric", year: "numeric"
-//     });
+ //       month: "short", day: "numeric", year: "numeric"
+ //       });
+    //}
