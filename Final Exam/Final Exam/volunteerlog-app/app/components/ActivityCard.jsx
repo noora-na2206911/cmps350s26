@@ -44,6 +44,36 @@ export default function SummaryCard({ image, title, amount, category }) {
     }
 
 }
+
+function activityCardHTML({ activity }) {
+    const a = activity;
+    const dateLabel = new Date(a.date).toLocaleDateString("en-US", {
+        month: "short", day: "numeric", year: "numeric"
+    });
+
+    return `
+        <article class="activity-card">
+            <div class="cover">
+                <img src="${a.image}" alt="${a.title}" />
+                <span class="badge badge-${a.status}">${a.status}</span>
+            </div>
+            <div class="card-body">
+                <div class="card-title-row">
+                    <h3>${a.title}</h3>
+                    <span class="badge badge-${a.category.toLowerCase()}">${a.category}</span>
+                </div>
+                <p class="card-date">${dateLabel}</p>
+                <hr class="card-divider" />
+                <div class="card-actions">
+                    <a class="action-link"
+                       href="pages/activity-detail.html?id=${a.id}">View Details</a>
+                    <button class="delete-btn"
+                            onclick="handleDeleteActivity(${a.id})" title="Delete ${a.title}">🗑</button>
+                </div>
+            </div>
+        </article>
+    `;
+}
 // Use this code
 
 // const dateLabel = new Date(xxxxx).toLocaleDateString("en-US", {

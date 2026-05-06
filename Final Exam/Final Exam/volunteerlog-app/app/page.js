@@ -9,21 +9,61 @@ import { deleteActivityAction } from "@/app/actions/activityActions";
 
 export default function Home() {
     // TODO 3a: Create state for the activity list, the selected category filter, and which activity (if any) is pending deletion
+    //image, title, date, category + status badges
+    const image = await activitiesRepo.getByType("img");
+    const title = await activitiesRepo.getByType("title");
+    const date = await activitiesRepo.getByType("");
+    const category = await activitiesRepo.getcategory();
+    const statusbadges = await actionsRepo.getAll();
+    const activities = await activitiesRepo.getAll();
+    const recentActivities = activities.slice(-5).reverse();
 
+    let activities = [];
+    let filterTerm = "";
+    const ACTIVITY_CATEGORIES = ["Education", "Health", "Environment", "Community"];
+
+async function myActivitiesPage() {
+    activities = await fetchJSON("/api/activities");
+    renderMyActivitiesPage();
+}
+
+
+function renderMyActivitiesPage() {
+    const filtered = filterTerm
+        ? activities.filter(a => a.category === filterTerm)
+        : activities;
+
+    const optionsHTML = ['<option value="">All categories</option>']
+        .concat(ACTIVITY_CATEGORIES.map(cat =>
+            `<option value="${cat}" ${filterTerm === cat ? "selected" : ""}>${cat}</option>`
+        ))
+        .join("");
     // TODO 3b: Write a loadActivities function that fetches from /api/activities (include ?filter=<category> when a category is selected)
     //          and updates the activity list state. Call it with useEffect whenever the filter changes.
 
     // TODO 3c: Write a handleDelete function that calls deleteActivityAction(id),
     //          clears the deleteId, and removes the activity from state
 
+
+async function handleDeleteActivity(id) {
+    if (!confirm("Delete this activity?")) return;
+    if (await deleteResource("activities", id)) {
+        activities = activities.filter(a => a.id !== id);
+        renderMyActivitiesPage();
+    }
+}
     return (
-        <>
+        <main className="page">
             <div className="page-intro">
                 <h1>My Activities</h1>
                 <p>Track your volunteer work and community impact.</p>
                 <div className="filter-select">
-                    {/* TODO 3d: Add a category dropdown (<select>) wired to your filter state.
-                                   Options: All categories ("") / Education / Health / Environment / Community */}
+                    /* TODO 3d: Add a category dropdown (<select>) wired to your filter state.
+                                   Options: All categories ("") / Education / Health / Environment / Community */
+                <SummaryCard title="categories" amount={totalIncome} category="Education " />
+                <SummaryCard title="categories" amount={totalExpense} category="Health " />
+                <SummaryCard title="categories" amount={balance} category="Environment" />
+                <SummaryCard title="categories" amount={totalBudgeted} category="Community"
                 </div>
             </div>
 
@@ -44,6 +84,6 @@ export default function Home() {
                     </div>
                 </div>
             </div>
-        </>
+        </main>
     );
 }

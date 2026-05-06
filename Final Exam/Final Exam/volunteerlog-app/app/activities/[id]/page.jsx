@@ -7,6 +7,33 @@ export default async function ActivityDetailPage({ params }) {
     //  - Fetch the activity via activitiesRepo.getById(id) and call notFound() when missing
     //  - Replace every hardcoded value below with the matching activity prop
 
+    const [activities, setActivites] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [deleteId, setDeleteId] = useState(null);
+
+    async function loadBudgets() {
+        const url = searchTerm
+            ? `/api/activities?q=${searchTerm}`
+            : "/api/activities";
+        const res = await fetch(url);
+        const data = await res.json();
+        setActivities(data);
+    }
+
+    useEffect(() => {
+        loadActivities();
+    }, [searchTerm]);
+
+    async function handleDelete(id) {
+        await deleteActivitiesAction(id);
+        setDeleteId(null);
+        setActivities(prev => prev.filter(b => b.id !== id));
+    }
+    async function fetchJSON() {
+    const res = await fetch activitiesRepo.getById(id);
+    return await res.json();
+}
+
     return (
         <main className="page detail-page">
             <Link href="/" className="back-link">&larr; Back to My Activities</Link>

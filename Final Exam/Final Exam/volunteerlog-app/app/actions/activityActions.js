@@ -11,8 +11,24 @@ export async function createActivityAction(prevState, formData) {
     // -Convert hours to a number
     // -Validate the required fields and return errors when invalid
     // -Create the activity via the repo, then revalidate the data and navigate the user home
+   const data = Object.fromEntries(formData);
+    data.hours = Number(data.hours);
+
+    const errors = {};
+    if (!data.description?.trim()) errors.description = "Description is required";
+    if (!data.hours|| data.hours <= 0) errors.hours = "hours must be greater than 0";
+    if (!data.date) errors.date = "Date is required";
+
+    if (Object.keys(errors).length > 0) {
+        return errors;
+    } 
+    await activitiesRepo.create(data);
+    revalidatePath("/");
+    redirect("/activities");
 }
 
 export async function deleteActivityAction(id) {
     // TODO 5b: Delete the activity via the repo and revalidate
+    await activitiesRepo.delete(id);
+    revalidatePath("/");
 }

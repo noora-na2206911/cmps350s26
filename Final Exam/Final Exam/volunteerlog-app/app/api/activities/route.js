@@ -21,7 +21,7 @@ export async function GET(request) {
 
     if (!body.description || !body.amount || !body.type || !body.category) {
         return NextResponse.json(
-            { error: "description, amount, type, and category are required" },
+            { error: "image, title, date, category + status badges are required" },
             { status: 404 }
         );
     }
