@@ -11,12 +11,19 @@ import Link from "next/link";
 export default function ActivityForm() {
     // TODO 5c: Read the activity from the URL search params and set up useActionState
 
-    // Temporary placeholders - replace once TODO 5c is done
-    const activity = null;
-    const error = {};
-    const formAction = null;
-    const isPending = false;
+    export default function ActivityForm() {
+    const searchParams = useSearchParams();
+    const params = Object.fromEntries(searchParams.entries());
+    const activity = params.id
+        ? { ...params, id: Number(params.id), hour: Number(params.hour) }
+        : null;
 
+     const isEdit = !!activity;
+    const action = isEdit ? updateActivityAction : createActivityAction;
+    const [error, formAction, isPending] = useActionState(action, {});
+    
+    // Temporary placeholders - replace once TODO 5c is done
+    
     return (
         <main className="page">
             <h1>Edit Activity</h1>
