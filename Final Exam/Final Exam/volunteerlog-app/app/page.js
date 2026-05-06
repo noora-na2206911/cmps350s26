@@ -41,17 +41,34 @@ function renderMyActivitiesPage() {
     // TODO 3b: Write a loadActivities function that fetches from /api/activities (include ?filter=<category> when a category is selected)
     //          and updates the activity list state. Call it with useEffect whenever the filter changes.
 
+
+   async function loadActivities() {
+        const params = new URLSearchParams();
+        if (filterType !== "all") params.set("type", filterType);
+        if (searchTerm) params.set("q", searchTerm);
+        const query = params.toString();
+        const url = `/api/activities${query ? `?${query}` : ""}`;
+        const res = await fetch(url);
+        const data = await res.json();
+        setActivities(data);
+    }
+
+    useEffect(() => {
+        loadActivities();
+    }, [filterType, searchTerm]);
+
+  
+
+
     // TODO 3c: Write a handleDelete function that calls deleteActivityAction(id),
     //          clears the deleteId, and removes the activity from state
-
-
-async function handleDeleteActivity(id) {
-    if (!confirm("Delete this activity?")) return;
-    if (await deleteResource("activities", id)) {
-        activities = activities.filter(a => a.id !== id);
-        renderMyActivitiesPage();
+  async function handleDelete(id) {
+        await deleteActivitiesAction(id);
+        setActivities(prev => prev.filter(t => t.id !== id));
     }
-}
+
+
+
     return (
         <main className="page">
             <div className="page-intro">
@@ -72,8 +89,10 @@ async function handleDeleteActivity(id) {
             <section className="activity-list">
             </section>
 
-            {/* TODO 3f: Only show this modal when deleteId is set.
-                         Wire Delete -> handleDelete(deleteId) and Keep -> clear deleteId. */}
+            /* TODO 3f: Only show this modal when deleteId is set.
+                         Wire Delete -> handleDelete(deleteId) and Keep -> clear deleteId. */
+            <Link href={{ pathname: "/activites/form", query: t }} className="btn btn--small btn--primary">Edit</Link>
+                                    <button className="btn btn--small btn--danger" onClick={() => handleDelete(t.id)}>Delete</button>             
             <div className="confirm-overlay">
                 <div className="confirm-dialog">
                     <h3>Delete this activity?</h3>
